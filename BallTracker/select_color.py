@@ -66,7 +66,11 @@ class HSV_Getter:
             # if image type is b g r, then b g r value will be displayed.
             # if image is gray then color intensity will be displayed.
             average = roi.mean(axis=0).mean(axis=0)
+            # average=np.array([int(i) for i in average])
+            average=average.astype(int)
+            color=np.uint8([[average]])
             hsv_color = cv2.cvtColor(color,cv2.COLOR_BGR2HSV)
+            cv2.destroyAllWindows()
             return hsv_color
 
 
