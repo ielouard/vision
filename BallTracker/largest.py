@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 import sys
-import libardrone.libardrone as libardrone
 import time
 
 TARGET_COLOR_MIN = np.array([0,100,100], np.uint8)
@@ -92,73 +91,13 @@ def largest(capture):
 					# Center of the object
 					x = center[0]
 					y = center[1]
-					'''
-					hor_speed = 0.0
-					vert_speed = 0.0
 
-					# Loop for checking speed
-					for i in range(1, 10):
-						_diff = diff*i
-						if (640-_diff)<x<(640+_diff): # On the x axis
-							hor_speed = (i-1)/10
-							break
 
-					for i in range(1, 10):
-						if (360-_diff)<y<(360+_diff): # On the y axis
-							vert_speed = (i-1)/10
-							break
-					'''
-					# Check direction of the ball
-					centerThresh = 50 # The 'centre' threshold for the ball
-					# On the X axis -> Note: Inverse
-					if (screenMidX-x) < -centerThresh: # To the left to the left
-						drone.turn_right()
-						#print "Left"
-					if (screenMidX-x) > centerThresh: # To the right to the right
-						drone.turn_left()
-						#print "right"
-					if -centerThresh < (screenMidX-x) < centerThresh:
-						#drone.hover()
-						pass
-						#print "Stop Rotating"
-
-					# On the Y axis
-					if (screenMidY-y) < -centerThresh: # Down!
-						drone.move_down()
-					if (screenMidY-y) > centerThresh: # Up!
-						drone.move_up()
-					if -centerThresh < (screenMidY-y) < centerThresh:
-						#drone.hover()
-						pass
-						#print "Stop Moving up or down"
-
-				# Get battery status of the drone
-				bat = drone.navdata.get(0, dict()).get('battery', 0)
-				#print str(bat)
-				if bat < 20:
-					running = False
-					print "Low Battery: "+str(bat)
-
-				# Display the Image
 				cv2.imshow('Drone', frame)
 		except:
 			print "Failed"
-		'''
-		if cv2.waitKey(1) & 0xFF == ord('w'):
-			print "Take OFF!!"
-			drone.reset()
-			drone.takeoff()
-			drone.hover()
-		'''
+
+
 		# Listen for Q Key Press
 		if cv2.waitKey(1) & 0xFF == ord('q'):
 			running = False
-
-	# Shutdown
-	print "Shutting Down..."
-	drone.land()
-	drone.halt()
-	print "Ok."
-
-if __name__ == '__main__':
-	main()

@@ -22,19 +22,11 @@ Track a green ball using OpenCV.
 import cv2
 import numpy as np
 import sys
+import argparse
 from select_color import HSV_Getter
 from largest import largest
 
-# For OpenCV2 image display
-WINDOW_NAME = 'BallTracker'
-hsv_getter=HSV_Getter()
-upper=hsv_getter.get_hsv()
-upper=upper.tolist()
-print upper
-upper= upper[0][0]
-upper=[upper[0],upper[1]+100,upper[1]+100]
-lower=[upper[0]-30,upper[1]-120,upper[1]-120]
-print upper, lower
+global upper, lower
 
 def track(image):
 
@@ -55,7 +47,7 @@ def track(image):
     # upper_green = np.array([80,200,200])
     lower_color=np.array(lower)
     upper_color=np.array(upper)
-
+    print lower_color,upper_color
     # Threshold the HSV image to get only green colors
     frameThreshold = cv2.inRange(hsv, lower_color, upper_color)
 
@@ -148,8 +140,23 @@ def track(image):
 
 # Test with input from camera
 if __name__ == '__main__':
-
-    capture = cv2.VideoCapture('ball4.mp4')
+    global upper
+    global lower
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-v", "--video", required=True, help="Path to the video")
+    ap.add_argument("-i", "--image", required=True, help="Path to the image")
+    args = vars(ap.parse_args())
+    # For OpenCV2 image display
+    WINDOW_NAME = 'BallTracker'
+    hsv_getter=HSV_Getter()
+    upper=hsv_getter.get_hsv(args["image"])
+    upper=upper.tolist()
+    print upper
+    upper= upper[0][0]
+    upper=[upper[0],upper[1]+100,upper[1]+100]
+    lower=[upper[0]-30,upper[1]-120,upper[1]-120]
+    print upper, lower
+    capture = cv2.VideoCapture(args["video"])
 
     while True:
 

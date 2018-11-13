@@ -32,14 +32,12 @@ class HSV_Getter:
     		cv2.rectangle(self.image, self.refPt[0], self.refPt[1], (0, 255, 0), 2)
     		cv2.imshow("image", self.image)
 
-    def get_hsv(self):
+    def get_hsv(self, image):
         # construct the argument parser and parse the arguments
-        ap = argparse.ArgumentParser()
-        ap.add_argument("-i", "--image", required=True, help="Path to the image")
-        args = vars(ap.parse_args())
+
 
         # load the image, clone it, and setup the mouse callback function
-        self.image = cv2.imread(args["image"])
+        self.image = cv2.imread(image)
         clone = self.image.copy()
         cv2.namedWindow("image")
         cv2.setMouseCallback("image", self.click_and_crop)
