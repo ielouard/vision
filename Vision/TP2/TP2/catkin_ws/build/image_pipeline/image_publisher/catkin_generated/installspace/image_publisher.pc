@@ -1,0 +1,8 @@
+prefix=/home/ibrahim/catkin_ws/install
+
+Name: image_publisher
+Description: Description of image_publisher
+Version: 1.12.23
+Cflags: -I/home/ibrahim/catkin_ws/install/include
+Libs: -L/home/ibrahim/catkin_ws/install/lib 
+Requires: 
